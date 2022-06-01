@@ -3,9 +3,9 @@ locals {
   iterable_origin_domain = "links.iterable.com"
   iterable_origin_id     = "ELB-linkslb-1505033010"
   route53_zone           = "joeypiccola-aws.com"
-  sub_domains            = ["itr-links","itr-links.dev","itr-images","itr-images.dev"]
-  fqdns                  = [for k in local.sub_domains : format("%s.${local.route53_zone}",k)]
-  tags                   = {app = "iterable"}
+  sub_domains            = ["itr-links", "itr-links.dev", "itr-images", "itr-images.dev"]
+  fqdns                  = [for k in local.sub_domains : format("%s.${local.route53_zone}", k)]
+  tags                   = { app = "iterable" }
 }
 
 data "aws_route53_zone" "route53_zone" {
@@ -15,8 +15,8 @@ data "aws_route53_zone" "route53_zone" {
 
 # create the cert, use first fqdn in fqdns list as CN and remaining fqdns as SANs
 resource "aws_acm_certificate" "acm_certificate" {
-  domain_name               = element(local.fqdns, 0)                  # <-- CN
-  subject_alternative_names = slice(local.fqdns,1,length(local.fqdns)) # <-- SANs
+  domain_name               = element(local.fqdns, 0)                    # <-- CN
+  subject_alternative_names = slice(local.fqdns, 1, length(local.fqdns)) # <-- SANs
   validation_method         = "DNS"
   tags                      = local.tags
 }
@@ -110,9 +110,9 @@ resource "aws_cloudfront_distribution" "cfd" {
   }
 
   default_cache_behavior {
-    allowed_methods          = [ "GET", "HEAD", "OPTIONS", "PUT", "POST", "PATCH", "DELETE" ]
+    allowed_methods          = ["GET", "HEAD", "OPTIONS", "PUT", "POST", "PATCH", "DELETE"]
     cache_policy_id          = aws_cloudfront_cache_policy.cache_policy.id
-    cached_methods           = [ "GET", "HEAD" ]
+    cached_methods           = ["GET", "HEAD"]
     target_origin_id         = "ELB-linkslb-1505033010" # this matches the origin_id in the defined origin {} block
     origin_request_policy_id = aws_cloudfront_origin_request_policy.origin_request_policy.id
     viewer_protocol_policy   = "allow-all"
