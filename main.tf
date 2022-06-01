@@ -8,6 +8,7 @@ locals {
   tags                   = { app = "iterable" }
 }
 
+# get the route53 zone used for CNAME validation and cloud front
 data "aws_route53_zone" "route53_zone" {
   name         = local.route53_zone
   private_zone = false
@@ -45,6 +46,7 @@ resource "aws_acm_certificate_validation" "certificate_validation" {
   validation_record_fqdns = [for record in aws_route53_record.route53_record_validation_cname : record.fqdn]
 }
 
+# create a cache policy that disables caching
 resource "aws_cloudfront_cache_policy" "cache_policy" {
   name        = "iterable-cache-policy"
   comment     = "Iterable cache policy with caching disabled."
@@ -65,6 +67,7 @@ resource "aws_cloudfront_cache_policy" "cache_policy" {
   }
 }
 
+# create a origin request policy that forwards everything
 resource "aws_cloudfront_origin_request_policy" "origin_request_policy" {
   name    = "iterable-origin-request-policy"
   comment = "Iterable origin request policy that sends cookies, headers, and query strings to the origin."
@@ -80,6 +83,7 @@ resource "aws_cloudfront_origin_request_policy" "origin_request_policy" {
   }
 }
 
+# create a cloudfront distribution
 resource "aws_cloudfront_distribution" "cfd" {
   aliases         = local.fqdns
   enabled         = true
@@ -119,6 +123,7 @@ resource "aws_cloudfront_distribution" "cfd" {
   }
 }
 
+# create CNAME records for cloudfront distribution
 resource "aws_route53_record" "route53_record_cfd_cname" {
   for_each = toset(local.fqdns)
 
