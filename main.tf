@@ -1,7 +1,6 @@
 locals {
   name                   = "one.joeypiccola-aws.com"
   iterable_origin_domain = "links.iterable.com"
-  iterable_origin_id     = "ELB-linkslb-1505033010"
   route53_zone           = "joeypiccola-aws.com"
   sub_domains            = ["itr-links", "itr-links.dev", "itr-images", "itr-images.dev"]
   fqdns                  = [for k in local.sub_domains : format("%s.${local.route53_zone}", k)]
