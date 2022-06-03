@@ -1,9 +1,14 @@
 locals {
   iterable_origin_domain = "links.iterable.com"
   route53_zone           = "joeypiccola-aws.com"
-  sub_domains            = ["itr-links", "itr-links.dev", "itr-images", "itr-images.dev"]
   fqdns                  = [for k in local.sub_domains : format("%s.${local.route53_zone}", k)]
   tags                   = { app = "iterable" }
+  sub_domains            = [
+    "itr-links",
+    "itr-links.dev",
+    "itr-images",
+    "itr-images.dev"
+  ]
 }
 
 # get the route53 zone used for CNAME validation and cloud front
@@ -18,6 +23,9 @@ resource "aws_acm_certificate" "acm_certificate" {
   subject_alternative_names = slice(local.fqdns, 1, length(local.fqdns)) # <-- SANs
   validation_method         = "DNS"
   tags                      = local.tags
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 # loop over each cert domain validation option (dvo) and create the appropriate route53 record
