@@ -1,5 +1,4 @@
 locals {
-  name                   = "one.joeypiccola-aws.com"
   iterable_origin_domain = "links.iterable.com"
   route53_zone           = "joeypiccola-aws.com"
   sub_domains            = ["itr-links", "itr-links.dev", "itr-images", "itr-images.dev"]
