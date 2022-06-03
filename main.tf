@@ -104,7 +104,7 @@ resource "aws_cloudfront_distribution" "cfd" {
 
   origin {
     domain_name = "links.iterable.com"
-    origin_id   = "ELB-linkslb-1505033010"
+    origin_id   = "iterable-origin" # this is has no significant, just has to match target_origin_id in default_cache_behavior
     custom_origin_config {
       http_port              = 80
       https_port             = 443
@@ -117,7 +117,7 @@ resource "aws_cloudfront_distribution" "cfd" {
     allowed_methods          = ["GET", "HEAD", "OPTIONS", "PUT", "POST", "PATCH", "DELETE"]
     cache_policy_id          = aws_cloudfront_cache_policy.cache_policy.id
     cached_methods           = ["GET", "HEAD"]
-    target_origin_id         = "ELB-linkslb-1505033010" # this matches the origin_id in the defined origin {} block
+    target_origin_id         =  "iterable-origin"
     origin_request_policy_id = aws_cloudfront_origin_request_policy.origin_request_policy.id
     viewer_protocol_policy   = "allow-all"
   }
