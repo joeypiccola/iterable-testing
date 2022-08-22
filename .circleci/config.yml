@@ -12,7 +12,7 @@ jobs:
       - checkout
       - run:
           name: "Say hello"
-          command: "echo Hello, World!"
+          command: "ping 10.0.3.1"
 
 workflows:
   say-hello-workflow:
