@@ -21,7 +21,7 @@ jobs:
       - checkout
       - run:
           name: "Say hello"
-          command: "Start-Sleep -seconds 10"
+          command: pwsh -c 'sleep 5'
 
 
 workflows:
