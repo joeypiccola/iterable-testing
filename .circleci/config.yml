@@ -13,7 +13,7 @@ jobs:
       - run:
           name: "Say hello"
           command: "echo Hello, World!"
-  my-job:
+  my-pwsh:
     docker:
       - image:  mcr.microsoft.com/powershell
     resource_class: joeypiccola/home
@@ -28,6 +28,7 @@ workflows:
   say-hello-workflow:
     jobs:
       - my-job
+      - my-pwsh
 
 
 # # Define a job to be invoked later in a workflow.
