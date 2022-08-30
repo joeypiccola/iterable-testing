@@ -13,6 +13,16 @@ jobs:
       - run:
           name: "Say hello"
           command: "echo Hello, World!"
+  my-job:
+    docker:
+      - image:  mcr.microsoft.com/powershell
+    resource_class: joeypiccola/home
+    steps:
+      - checkout
+      - run:
+          name: "Say hello"
+          command: "Start-Sleep -seconds 10"
+
 
 workflows:
   say-hello-workflow:
