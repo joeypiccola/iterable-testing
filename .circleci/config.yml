@@ -36,4 +36,6 @@ workflows:
             branches:
               only:
                 - main
-      - say-goodbye
+      - say-goodbye:
+          requires:
+            - request-approval
