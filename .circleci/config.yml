@@ -10,6 +10,7 @@ orbs:
     orbs:
       terraform: circleci/terraform@3.1.0
     jobs:
+      resource_class: joeypiccola/home
       tfplan:
         parameters:
           environment:
@@ -26,6 +27,13 @@ orbs:
 workflows:
   main:
     jobs:
-      # resource_class: joeypiccola/home
+      resource_class: joeypiccola/home
       - circleci-terraform-orb/tfplan:
           environment: << pipeline.parameters.environment >>
+
+
+# jobs:
+#   say-hello:
+#     docker:
+#       - image: cimg/base:stable
+#     resource_class: joeypiccola/home
