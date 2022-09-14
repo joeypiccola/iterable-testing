@@ -12,6 +12,7 @@ orbs:
     jobs:
       tfplan:
         executer:
+          name: terraform/default
           resource_class: joeypiccola/home
         parameters:
           environment:
