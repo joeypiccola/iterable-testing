@@ -27,7 +27,6 @@ orbs:
 workflows:
   main:
     jobs:
-      resource_class: joeypiccola/home
       - circleci-terraform-orb/tfplan:
           environment: << pipeline.parameters.environment >>
 
