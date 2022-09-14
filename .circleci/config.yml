@@ -11,7 +11,7 @@ orbs:
       terraform: circleci/terraform@3.1.0
     jobs:
       tfplan:
-        executer:
+        executor:
           name: terraform/default
           resource_class: joeypiccola/home
         parameters:
