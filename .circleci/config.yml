@@ -10,8 +10,8 @@ orbs:
     orbs:
       terraform: circleci/terraform@3.1.0
     jobs:
-      resource_class: joeypiccola/home
       tfplan:
+        resource_class: joeypiccola/home
         parameters:
           environment:
             description: The environment to use for tf vars and which to run a plan against.
