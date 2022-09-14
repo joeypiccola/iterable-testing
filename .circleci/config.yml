@@ -24,7 +24,7 @@ orbs:
               path: ./terraform
           - terraform/plan:
               path: ./terraform
-              var_file: ../<< parameters.environment >>/terraform.tfvars
+              var_file: ../tf-environments/<< parameters.environment >>/terraform.tfvars
 
 workflows:
   main:
