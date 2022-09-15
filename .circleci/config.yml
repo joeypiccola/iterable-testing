@@ -58,10 +58,12 @@ orbs:
             default: dev
             type: string
           resource_class:
-            description: The CircleCI resouce class to by used by the executor.
+            description: The CircleCI resource class to by used by the executor.
+            default: medium
             type: string
           terraform_version:
             description: The version of Terraform to use.
+            default: "1.1.7"
             type: string
         steps:
           - checkout
@@ -76,10 +78,3 @@ workflows:
           #ci_environment: << pipeline.parameters.ci_environment >>
           #resource_class: << pipeline.parameters.resource_class >>
           #terraform_version: << pipeline.parameters.terraform_version >>
-
-
-# jobs:
-#   say-hello:
-#     docker:
-#       - image: cimg/base:stable
-#     resource_class: joeypiccola/home
