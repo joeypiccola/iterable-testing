@@ -50,13 +50,17 @@ orbs:
       tfplan:
         executor:
           name: default
-          resource-class: << parameters.resource_class >>
+          resource_class: << parameters.resource_class >>
+          terraform_version: << parameters.terraform_version >>
         parameters:
           ci_environment:
             description: The environment to use for tf vars and which to run a plan against.
             type: string
           resource_class:
             description: The CircleCI resouce class to by used by the executor.
+            type: string
+          terraform_version:
+            description: The version of Terraform to use.
             type: string
         steps:
           - checkout
@@ -70,6 +74,7 @@ workflows:
       - circleci-terraform-orb/tfplan:
           ci_environment: << pipeline.parameters.ci_environment >>
           resource_class: << pipeline.parameters.resource_class >>
+          terraform_version: << pipeline.parameters.terraform_version >>
 
 
 # jobs:
