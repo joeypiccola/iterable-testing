@@ -1,17 +1,30 @@
 version: 2.1
 
 parameters:
-  environment:
+  ci_environment:
     type: string
     default: dev
+  resource_class:
+    type: string
+    default: joeypiccola/home
+  terraform_version:
+    default: "1.1.9"
+    type: string
 
 orbs:
   circleci-terraform-orb:
     executors:
       default:
+        parameters:
+          resource_class:
+            default: medium
+            type: string
+          terraform_version:
+            default: "1.1.7"
+            type: string
         docker:
-          - image: hashicorp/terraform:1.1.7
-        resource_class: joeypiccola/home
+          - image: hashicorp/terraform:<< parameters.terraform_version >>
+        resource_class: << parameters.resource_class >>
     commands:
       init:
         description: run terraform init
@@ -37,21 +50,26 @@ orbs:
       tfplan:
         executor:
           name: default
+          resource-class: << parameters.resource_class >>
         parameters:
-          environment:
+          ci_environment:
             description: The environment to use for tf vars and which to run a plan against.
+            type: string
+          resource_class:
+            description: The CircleCI resouce class to by used by the executor.
             type: string
         steps:
           - checkout
           - init
           - plan:
-              ci_environment: << parameters.environment >>
+              ci_environment: << parameters.ci_environment >>
 
 workflows:
   main:
     jobs:
       - circleci-terraform-orb/tfplan:
-          environment: << pipeline.parameters.environment >>
+          ci_environment: << pipeline.parameters.ci_environment >>
+          resource_class: << pipeline.parameters.resource_class >>
 
 
 # jobs:
