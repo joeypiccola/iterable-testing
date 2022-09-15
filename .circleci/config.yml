@@ -17,7 +17,7 @@ orbs:
         description: run terraform init
         steps:
           - run:
-              working_dir: terraform
+              working_directory: terraform
               command: |
                 terraform init -no-color -input=false
       plan:
@@ -30,7 +30,7 @@ orbs:
             type: string
         steps:
           - run:
-              working_dir: terraform
+              working_directory: terraform
               command: |
                 terraform plan -var-file="../tf-environments/<< parameters.ci_environment >>/terraform.tfvars" -out=tfplan -no-color -input=false
     jobs:
