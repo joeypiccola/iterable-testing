@@ -43,8 +43,8 @@ orbs:
             type: string
         steps:
           - checkout
-          - circleci-terraform-orb/init
-          - circleci-terraform-orb/plan:
+          - init
+          - plan:
               ci_environment: << parameters.environment >>
 
 workflows:
