@@ -7,24 +7,45 @@ parameters:
 
 orbs:
   circleci-terraform-orb:
-    orbs:
-      terraform: circleci/terraform@3.1.0
+    executors:
+      default:
+        docker:
+          - image: hashicorp/terraform:1.1.7
+        resource_class: joeypiccola/home
+    commands:
+      init:
+        description: run terraform init
+        steps:
+          - run:
+              working_dir: terraform
+              command: |
+                terraform init -no-color -input=false
+      plan:
+        description: run terraform plan
+        parameters:
+          ci_environment:
+            default: dev
+            description: |
+              The terraform environment to run against
+            type: string
+        steps:
+          - run:
+              working_dir: terraform
+              command: |
+                terraform plan -var-file="../tf-environments/<< parameters.ci_environment >>/terraform.tfvars" -out=tfplan -no-color -input=false
     jobs:
       tfplan:
         executor:
-          name: terraform/default
-          resource_class: joeypiccola/home
+          name: circleci-terraform-orb/default
         parameters:
           environment:
             description: The environment to use for tf vars and which to run a plan against.
             type: string
         steps:
           - checkout
-          - terraform/init:
-              path: ./terraform
-          - terraform/plan:
-              path: ./terraform
-              var_file: ../tf-environments/<< parameters.environment >>/terraform.tfvars
+          - circleci-terraform-orb/init
+          - circleci-terraform-orb/plan:
+              ci_environment: << parameters.environment >>
 
 workflows:
   main:
