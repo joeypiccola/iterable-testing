@@ -36,7 +36,7 @@ orbs:
     jobs:
       tfplan:
         executor:
-          name: circleci-terraform-orb/default
+          name: default
         parameters:
           environment:
             description: The environment to use for tf vars and which to run a plan against.
