@@ -35,22 +35,27 @@ orbs:
           - run:
               working_directory: terraform
               command: |
-                az version
-                echo 'export ANIMAL=dog' >> "$BASH_ENV"
-                echo $ANIMAL
+                FAV=dog
+                echo 'export ANIMAL="$FAV"' >> "$BASH_ENV"
+                echo $FAV
       b:
         description: a desc
         steps:
           - run:
               working_directory: terraform
               command: |
-                az version
+                echo $ANIMAL
+      c:
+        description: a desc
+        steps:
+          - run:
+              working_directory: terraform
+              command: |
                 echo $ANIMAL
                 source "$BASH_ENV"
                 echo $ANIMAL
-
     jobs:
-      my_job:
+      my_job_a:
         executor:
           name: default
           image_name: << parameters.image_name >>
@@ -70,9 +75,29 @@ orbs:
           - checkout
           - a
           - b
-
+      my_job_b:
+        executor:
+          name: default
+          image_name: << parameters.image_name >>
+          image_tag: << parameters.image_tag >>
+          resource_class: << parameters.resource_class >>
+        parameters:
+          resource_class:
+            default: "joeypiccola/home"
+            type: string
+          image_tag:
+            default: "2.9.1"
+            type: string
+          image_name:
+            default: "mcr.microsoft.com/azure-cli"
+            type: string
+        steps:
+          - checkout
+          - c
 workflows:
   main:
     jobs:
-      - my_orb/my_job:
-          resource_class: medium
+      - my_orb/my_job_a:
+          resource_class: small
+      - my_orb/my_job_b:
+          resource_class: small
