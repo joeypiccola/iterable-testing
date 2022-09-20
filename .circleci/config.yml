@@ -102,3 +102,5 @@ workflows:
           resource_class: small
           image_name: "hashicorp/terraform"
           image_tag: "1.2.9"
+          requires:
+            - my_orb/my_job_a
