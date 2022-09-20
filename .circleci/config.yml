@@ -17,13 +17,13 @@ orbs:
       default:
         parameters:
           resource_class:
-            default: medium
+            default: small
             type: string
           image_tag:
-            default: "2.9.1"
+            # default: "2.9.1"
             type: string
           image_name:
-            default: mcr.microsoft.com/azure-cli
+            # default: mcr.microsoft.com/azure-cli
             type: string
         docker:
           - image: << parameters.image_name >>:<< parameters.image_tag >>
@@ -47,7 +47,7 @@ orbs:
               command: |
                 echo "FAV: $FAV"
                 echo "ANIMAL: $ANIMAL"
-                echo "COLOR :$COLOR"
+                echo "COLOR: $COLOR"
       c:
         description: a desc
         steps:
@@ -66,13 +66,13 @@ orbs:
           resource_class: << parameters.resource_class >>
         parameters:
           resource_class:
-            default: "joeypiccola/home"
+            # default: "joeypiccola/home"
             type: string
           image_tag:
-            default: "2.9.1"
+            # default: "2.9.1"
             type: string
           image_name:
-            default: "mcr.microsoft.com/azure-cli"
+            # default: "mcr.microsoft.com/azure-cli"
             type: string
         steps:
           - checkout
@@ -102,5 +102,7 @@ workflows:
     jobs:
       - my_orb/my_job_a:
           resource_class: small
+          image_name: "mcr.microsoft.com/azure-cli"
+          image_tag: "2.9.1"
       # - my_orb/my_job_b:
       #     resource_class: small
