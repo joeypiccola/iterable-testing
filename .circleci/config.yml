@@ -1,80 +1,61 @@
 version: 2.1
 
 parameters:
-  ci_environment:
-    type: string
-    default: dev
   resource_class:
+    default: "joeypiccola/home"
     type: string
-    default: joeypiccola/home
-  terraform_version:
+  image_tag:
     default: "1.1.9"
+    type: string
+  image_name:
+    default: "mcr.microsoft.com/azure-cli"
     type: string
 
 orbs:
-  circleci-terraform-orb:
+  my_orb:
     executors:
       default:
         parameters:
           resource_class:
             default: medium
             type: string
-          terraform_version:
+          image_tag:
             default: "1.1.7"
+            type: string
+          image_name:
+            default: mcr.microsoft.com/azure-cli
             type: string
         docker:
-          - image: hashicorp/terraform:<< parameters.terraform_version >>
+          - image: << parameters.image_name >>:<< parameters.image_tag >>
         resource_class: << parameters.resource_class >>
     commands:
-      init:
-        description: run terraform init
+      a:
+        description: a desc
         steps:
           - run:
               working_directory: terraform
               command: |
-                terraform init -no-color -input=false
-      plan:
-        description: run terraform plan
-        parameters:
-          ci_environment:
-            default: dev
-            description: |
-              The terraform environment to run against
-            type: string
+                az version
+      b:
+        description: a desc
         steps:
           - run:
               working_directory: terraform
               command: |
-                terraform plan -var-file="../tf-environments/<< parameters.ci_environment >>/terraform.tfvars" -out=tfplan -no-color -input=false
+                az version
     jobs:
-      tfplan:
+      my_job:
         executor:
           name: default
-          resource_class: << parameters.resource_class >>
-          terraform_version: << parameters.terraform_version >>
-        parameters:
-          ci_environment:
-            description: The environment to use for tf vars and which to run a plan against.
-            default: dev
-            type: string
-          resource_class:
-            description: The CircleCI resource class to by used by the executor.
-            default: medium
-            type: string
-          terraform_version:
-            description: The version of Terraform to use.
-            default: "1.1.7"
-            type: string
+          image_name: << parameters.image_name >>
+          image_tag: << parameters.image_tag >>
+          resource_class: medium
         steps:
           - checkout
-          - init
-          - plan:
-              ci_environment: << parameters.ci_environment >>
+          - a
+          - b
 
 workflows:
   main:
     jobs:
-      - circleci-terraform-orb/tfplan:
-          ci_environment: << pipeline.parameters.ci_environment >>
-          resource_class: << pipeline.parameters.resource_class >>
-          terraform_version: << pipeline.parameters.terraform_version >>
+      - my_orb/my_job
