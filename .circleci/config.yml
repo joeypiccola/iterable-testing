@@ -54,9 +54,9 @@ orbs:
           - run:
               working_directory: terraform
               command: |
-                echo $ANIMAL
-                source $BASH_ENV
-                echo $ANIMAL
+                echo "FAV: $FAV"
+                echo "ANIMAL: $ANIMAL"
+                echo "COLOR: $COLOR"
     jobs:
       my_job_a:
         executor:
@@ -66,13 +66,10 @@ orbs:
           resource_class: << parameters.resource_class >>
         parameters:
           resource_class:
-            # default: "joeypiccola/home"
             type: string
           image_tag:
-            # default: "2.9.1"
             type: string
           image_name:
-            # default: "mcr.microsoft.com/azure-cli"
             type: string
         steps:
           - checkout
@@ -86,13 +83,10 @@ orbs:
           resource_class: << parameters.resource_class >>
         parameters:
           resource_class:
-            default: "joeypiccola/home"
             type: string
           image_tag:
-            default: "2.9.1"
             type: string
           image_name:
-            default: "mcr.microsoft.com/azure-cli"
             type: string
         steps:
           - checkout
@@ -104,5 +98,7 @@ workflows:
           resource_class: small
           image_name: "mcr.microsoft.com/azure-cli"
           image_tag: "2.9.1"
-      # - my_orb/my_job_b:
-      #     resource_class: small
+      - my_orb/my_job_b:
+          resource_class: small
+          image_name: "hashicorp/terraform"
+          image_tag: "1.2.9"
