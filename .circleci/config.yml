@@ -37,8 +37,8 @@ orbs:
               command: |
                 FAV=dog
                 echo $FAV
-                echo 'export ANIMAL=$FAV' >> $BASH_ENV
-                echo 'export COLOR=red' >> $BASH_ENV
+                echo 'export ANIMAL="$FAV"' >> $BASH_ENV
+                echo 'export COLOR="red"' >> $BASH_ENV
       b:
         description: a desc
         steps:
