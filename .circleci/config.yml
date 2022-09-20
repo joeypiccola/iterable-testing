@@ -60,6 +60,9 @@ orbs:
               command: |
                 FAV=$(cat workspace/fav)
                 echo "FAV: $FAV"
+                pwd
+                ls -la
+                ls -la workspace
     jobs:
       my_job_a:
         executor:
