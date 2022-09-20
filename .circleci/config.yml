@@ -37,7 +37,7 @@ orbs:
               command: |
                 FAV=dog
                 echo $FAV
-                echo 'export ANIMAL="my fav: ${FAV}"' >> "$BASH_ENV"
+                echo 'export ANIMAL=$FAV' >> $BASH_ENV
       b:
         description: a desc
         steps:
@@ -52,7 +52,7 @@ orbs:
               working_directory: terraform
               command: |
                 echo $ANIMAL
-                source "$BASH_ENV"
+                source $BASH_ENV
                 echo $ANIMAL
     jobs:
       my_job_a:
