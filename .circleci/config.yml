@@ -38,6 +38,7 @@ orbs:
                 FAV=dog
                 echo $FAV
                 echo 'export ANIMAL=$FAV' >> $BASH_ENV
+                echo 'export COLOR=red' >> $BASH_ENV
       b:
         description: a desc
         steps:
@@ -45,6 +46,7 @@ orbs:
               working_directory: terraform
               command: |
                 echo $ANIMAL
+                echo $COLOR
       c:
         description: a desc
         steps:
