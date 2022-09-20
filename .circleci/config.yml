@@ -33,17 +33,20 @@ orbs:
         description: a desc
         steps:
           - run:
-              working_directory: terraform
+              # working_directory: terraform
               command: |
                 FAV=dog
-                echo "FAV: $FAV"
                 echo "export ANIMAL=$FAV" >> $BASH_ENV
                 echo 'export COLOR=red' >> $BASH_ENV
+                echo "FAV: $FAV"
+                echo "ANIMAL: $ANIMAL"
+                echo "COLOR: $COLOR"
+                echo $FAV > workspace/fav
       b:
         description: a desc
         steps:
           - run:
-              working_directory: terraform
+              # working_directory: terraform
               command: |
                 echo "FAV: $FAV"
                 echo "ANIMAL: $ANIMAL"
@@ -52,11 +55,10 @@ orbs:
         description: a desc
         steps:
           - run:
-              working_directory: terraform
+              # working_directory: terraform
               command: |
+                FAV=$(cat workspace/fav)
                 echo "FAV: $FAV"
-                echo "ANIMAL: $ANIMAL"
-                echo "COLOR: $COLOR"
     jobs:
       my_job_a:
         executor:
@@ -75,6 +77,10 @@ orbs:
           - checkout
           - a
           - b
+          - persist_to_workspace:
+              root: workspace
+              paths:
+                - fav
       my_job_b:
         executor:
           name: default
@@ -90,6 +96,8 @@ orbs:
             type: string
         steps:
           - checkout
+          - attach_workspace
+              at: workspace
           - c
 workflows:
   main:
