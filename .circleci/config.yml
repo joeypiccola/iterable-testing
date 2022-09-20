@@ -35,6 +35,7 @@ orbs:
           - run:
               # working_directory: terraform
               command: |
+                mkdir -p workspace
                 FAV=dog
                 echo "export ANIMAL=$FAV" >> $BASH_ENV
                 echo 'export COLOR=red' >> $BASH_ENV
