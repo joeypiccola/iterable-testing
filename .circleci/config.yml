@@ -36,8 +36,8 @@ orbs:
               working_directory: terraform
               command: |
                 FAV=dog
-                echo 'export ANIMAL="$FAV"' >> "$BASH_ENV"
                 echo $FAV
+                echo 'export ANIMAL="my fav: $FAV"' >> "$BASH_ENV"
       b:
         description: a desc
         steps:
@@ -99,5 +99,5 @@ workflows:
     jobs:
       - my_orb/my_job_a:
           resource_class: small
-      - my_orb/my_job_b:
-          resource_class: small
+      # - my_orb/my_job_b:
+      #     resource_class: small
