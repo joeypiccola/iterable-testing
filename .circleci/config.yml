@@ -36,6 +36,8 @@ orbs:
               working_directory: terraform
               command: |
                 az version
+                echo 'export ANIMAL=dog' >> "$BASH_ENV"
+                echo $ANIMAL
       b:
         description: a desc
         steps:
@@ -43,6 +45,10 @@ orbs:
               working_directory: terraform
               command: |
                 az version
+                echo $ANIMAL
+                source "$BASH_ENV"
+                echo $ANIMAL
+
     jobs:
       my_job:
         executor:
