@@ -49,7 +49,17 @@ orbs:
           name: default
           image_name: << parameters.image_name >>
           image_tag: << parameters.image_tag >>
-          resource_class: medium
+          resource_class: << parameters.resource_class >>
+        parameters:
+          resource_class:
+            default: "joeypiccola/home"
+            type: string
+          image_tag:
+            default: "1.1.9"
+            type: string
+          image_name:
+            default: "mcr.microsoft.com/azure-cli"
+            type: string
         steps:
           - checkout
           - a
