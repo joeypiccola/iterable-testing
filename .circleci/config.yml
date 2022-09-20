@@ -96,7 +96,7 @@ orbs:
             type: string
         steps:
           - checkout
-          - attach_workspace
+          - attach_workspace:
               at: workspace
           - c
 workflows:
