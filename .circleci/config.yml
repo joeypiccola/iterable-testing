@@ -46,7 +46,7 @@ orbs:
               working_directory: terraform
               command: |
                 echo "FAV: $FAV"
-                echo "ANIMALT: $ANIMAL"
+                echo "ANIMAL: $ANIMAL"
                 echo "COLOR :$COLOR"
       c:
         description: a desc
