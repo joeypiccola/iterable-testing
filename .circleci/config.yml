@@ -37,14 +37,15 @@ orbs:
               command: |
                 FAV=dog
                 echo $FAV
-                echo 'export ANIMAL="$FAV"' >> $BASH_ENV
-                echo 'export COLOR="red"' >> $BASH_ENV
+                echo 'export ANIMAL=$FAV' >> $BASH_ENV
+                echo 'export COLOR=red' >> $BASH_ENV
       b:
         description: a desc
         steps:
           - run:
               working_directory: terraform
               command: |
+                echo $FAV
                 echo $ANIMAL
                 echo $COLOR
       c:
