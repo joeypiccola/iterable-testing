@@ -33,7 +33,7 @@ orbs:
         description: a desc
         steps:
           - run:
-              working_directory: terraform
+              # working_directory: terraform
               command: |
                 mkdir -p workspace
                 FAV=dog
@@ -47,8 +47,9 @@ orbs:
         description: a desc
         steps:
           - run:
-              working_directory: terraform
+              # working_directory: terraform
               command: |
+                ls workspace
                 echo "FAV: $FAV"
                 echo "ANIMAL: $ANIMAL"
                 echo "COLOR: $COLOR"
@@ -56,7 +57,7 @@ orbs:
         description: a desc
         steps:
           - run:
-              working_directory: terraform
+              # working_directory: terraform
               command: |
                 FAV=$(cat workspace/fav)
                 echo "FAV: $FAV"
