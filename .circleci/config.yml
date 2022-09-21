@@ -50,6 +50,7 @@ orbs:
               # working_directory: terraform
               command: |
                 ls workspace
+                cat workspace/fav
                 echo "FAV: $FAV"
                 echo "ANIMAL: $ANIMAL"
                 echo "COLOR: $COLOR"
