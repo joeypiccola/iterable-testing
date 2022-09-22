@@ -43,6 +43,7 @@ orbs:
                 echo "ANIMAL: $ANIMAL"
                 echo "COLOR: $COLOR"
                 echo $FAV > workspace/fav
+                echo "CLOUD: $cloud"
       b:
         description: a desc
         steps:
@@ -67,6 +68,8 @@ orbs:
                 ls -la workspace
     jobs:
       my_job_a:
+        environment:
+          cloud='azure'
         executor:
           name: default
           image_name: << parameters.image_name >>
